@@ -18,9 +18,13 @@ artists = artist_repository.all()
 for artist in artists:
     print(artist)
 
-
+# Retrieve all albums
 album_repository = AlbumRepository(connection)
 albums = album_repository.all()
 
+#List all albums
 for album in albums:
     print(album)
+
+# Print single album with id = 1
+print(album_repository.find(1))
