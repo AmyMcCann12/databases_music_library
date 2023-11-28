@@ -20,11 +20,9 @@ for artist in artists:
 
 # Retrieve all albums
 album_repository = AlbumRepository(connection)
+album_repository.delete(2)
 albums = album_repository.all()
 
 #List all albums
 for album in albums:
     print(album)
-
-# Print single album with id = 1
-print(album_repository.find(1))
