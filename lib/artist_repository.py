@@ -1,4 +1,5 @@
 from lib.artist import Artist
+from lib.album import Album
 
 class ArtistRepository:
 
@@ -22,6 +23,19 @@ class ArtistRepository:
         row = rows[0]
         return Artist(row["id"], row["name"], row["genre"])
 
+    def find_with_albums(self, artist_id):
+        rows = self.connection.execute(
+            'SELECT * FROM artists JOIN albums ON artists.id = albums.artist_id WHERE artists.id = %s',
+            [artist_id]
+        )
+        albums = []
+        for row in rows:
+            album = Album(row['id'], row['title'], row['release_year'], row['artist_id'])
+            albums.append(album)
+        artist = Artist(rows[0]['artist_id'], rows[0]['name'], rows[0]['genre'], albums)
+        print(artist)
+        return artist
+    
     # Create a new artist
     # Do you want to get its id back? Look into RETURNING id;
     def create(self, artist):
